@@ -1,0 +1,35 @@
+hot-menu {
+    a {
+        text-decoration: none;
+    }
+
+    hot-menu-item {
+        text-decoration: none;
+    }
+}
+
+._rounded-circle {
+    border-radius: 50%;
+}
+
+.productName {
+    margin: 1em 1em 1em -1em;
+    color: var(--gray-700);
+}
+
+.icon-label--menu-style {
+    color: var(--gray-500);
+
+    + span {
+        color: var(--gray-700);
+    }
+}
+
+.active-item {
+    .hot-application-menu__icon {
+        color: #355cc0;
+        + span {
+            color: #355cc0;
+        }
+    }
+}
