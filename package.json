@@ -4,7 +4,7 @@
   "description": "",
   "private": true,
   "scripts": {
-    "start": "webpack-dev-server -mode development --inline --hot",
+    "start": "webpack-dev-server --config webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "watch": "webpack -w",
@@ -20,6 +20,7 @@
     "@types/lodash": "^4.14.176",
     "@types/react-router": "^5.1.17",
     "@types/react-router-dom": "^5.3.2",
+    "autoprefixer": "^10.4.0",
     "babel-loader": "^8.2.3",
     "css-loader": "^6.4.0",
     "html-webpack-plugin": "^5.5.0",

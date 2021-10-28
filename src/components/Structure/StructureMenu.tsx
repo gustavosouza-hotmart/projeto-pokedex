@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { useLocation } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 
 import '@cosmos/menu';
 import '@cosmos/header';
@@ -10,20 +10,42 @@ import '@cosmos/menu-item';
 import '@cosmos/collapse';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faDragon} from "@fortawesome/pro-light-svg-icons/faDragon";
-import {faUsers} from "@fortawesome/pro-light-svg-icons/faUsers";
+import { faDragon } from "@fortawesome/pro-light-svg-icons/faDragon";
+import { faUsers } from "@fortawesome/pro-light-svg-icons/faUsers";
 
 import "./structure.scss";
 
 
-function StructureMenu(){
+function StructureMenu() {
+    const submenuTodosRef = useRef<any>(null);
     const location = useLocation();
-    
-    return(
-        <hot-menu slot="menu" open>
+    const history = useHistory();
+
+    useEffect(effectMount, []);
+
+    function effectMount() {
+        submenuTodosRef.current && submenuTodosRef.current.addEventListener('click', onClickTodos);
+        return () => submenuTodosRef.current && submenuTodosRef.current.removeEventListener('click', onClickTodos);
+    }
+
+    function onClickTodos() {
+        history.push('/pokemons/todos');
+        console.log('Clicked Todos');
+    }
+
+    function onClickVistos() {
+        console.log('Clicked Vistos');
+    }
+
+    function onClickCapturados() {
+        console.log('Clicked Capturados');
+    }
+
+    return (
+        <hot-menu slot="menu">
 
             <div slot="product-name" className="productName">Pokémon</div>
-            
+
             <hot-header slot="header">
                 <hot-dropdown slot="header-actions">
                     <hot-menu-item slot="button">
@@ -35,34 +57,31 @@ function StructureMenu(){
                     </hot-menu-item>
                 </hot-dropdown>
             </hot-header>
-            
-            <Link to={`/pokemons/vistos`}>
-                <hot-menu-item>
-                    <div className="hot-application-menu__icon icon-label--menu-style">
-                        <FontAwesomeIcon icon={faDragon}/>
-                    </div>
-                    <span>Pokémons</span>
-                    
-                        <hot-menu-item class="submenu" slot="collapsed" {...(location.pathname === "/pokemons/todos" && {active: "true", class:"active-item" })}> 
-                            <span>Todos</span>
-                        </hot-menu-item>
-                        
-                        <hot-menu-item class="submenu" slot="collapsed"  {...(location.pathname === "/pokemons/vistos" && {active: "true", class:"active-item"})}> 
-                            <span>Vistos</span>
-                        </hot-menu-item>
-                    
-                    
-                        <hot-menu-item class="submenu" slot="collapsed" {...(location.pathname === "/pokemons/capturados" && {active: "true", class:"active-item"})}> 
-                            <span>Capturados</span>
-                        </hot-menu-item>
 
+            <hot-menu-item>
+                <div className="hot-application-menu__icon icon-label--menu-style">
+                    <FontAwesomeIcon icon={faDragon} />
+                </div>
+                <span>Pokémons</span>
+
+                <hot-menu-item ref={submenuTodosRef} class="submenu" slot="collapsed" {...(location.pathname === "/pokemons/todos" && { active: "true", class: "active-item" })}>
+                    <span>Todos</span>
                 </hot-menu-item>
-            </Link>
+
+                <hot-menu-item class="submenu" slot="collapsed"  {...(location.pathname === "/pokemons/vistos" && { active: "true", class: "active-item" })}>
+                    <span>Vistos</span>
+                </hot-menu-item>
+
+                <hot-menu-item class="submenu" slot="collapsed" {...(location.pathname === "/pokemons/capturados" && { active: "true", class: "active-item" })}>
+                    <span>Capturados</span>
+                </hot-menu-item>
+
+            </hot-menu-item>
 
             <Link to="/treinadores">
-                <hot-menu-item {...(location.pathname === "/treinadores" && {active: "true", class:"active-item"})}>
+                <hot-menu-item {...(location.pathname === "/treinadores" && { active: "true", class: "active-item" })}>
                     <div className="hot-application-menu__icon icon-label--menu-style">
-                        <FontAwesomeIcon icon={faUsers}/>
+                        <FontAwesomeIcon icon={faUsers} />
                     </div>
                     <span>Treinadores</span>
                 </hot-menu-item>
