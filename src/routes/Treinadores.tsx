@@ -2,6 +2,8 @@ import React from 'react';
 import Breadcrumb from './../components/Breadcrumb/breadcrumb';
 import { useLocation } from 'react-router';
 import { usePath } from './../hooks/usePath';
+import ContentHeader from './../components/ContentHeader/content-header';
+import Header from '../components/Header/header';
 
 export function Treinadores() {
 
@@ -9,7 +11,14 @@ export function Treinadores() {
     const breadcrumbItems = usePath(path.pathname);
 
     return(
-        <Breadcrumb items={breadcrumbItems} />
+        <div className="treinadores">
+            <Breadcrumb items={breadcrumbItems} />
+            
+            <ContentHeader>
+                <Header />
+            </ContentHeader>
+            
+        </div>
     );
 }
 

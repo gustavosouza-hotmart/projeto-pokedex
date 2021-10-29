@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory, useLocation } from 'react-router';
 
@@ -18,27 +18,52 @@ import "./structure.scss";
 
 function StructureMenu() {
     const submenuTodosRef = useRef<any>(null);
+    const submenuVistosRef = useRef<any>(null);
+    const submenuCapturadosRef = useRef<any>(null);
+    const submenuPokemonsRef = useRef<any>(null);
     const location = useLocation();
     const history = useHistory();
+    const [pokemonsSubmenuStatus, setPokemonsSubmenuStatus] = useState(false);
 
     useEffect(effectMount, []);
 
+    useEffect(() => {
+        let teste = submenuPokemonsRef.current;
+        
+        console.log(teste);
+        console.log(pokemonsSubmenuStatus);
+        
+    }, [pokemonsSubmenuStatus]);
+
     function effectMount() {
         submenuTodosRef.current && submenuTodosRef.current.addEventListener('click', onClickTodos);
-        return () => submenuTodosRef.current && submenuTodosRef.current.removeEventListener('click', onClickTodos);
+        submenuVistosRef.current && submenuVistosRef.current.addEventListener('click', onClickVistos);
+        submenuCapturadosRef.current && submenuCapturadosRef.current.addEventListener('click', onClickCapturados);
+        submenuPokemonsRef.current && submenuPokemonsRef.current.addEventListener('click', onOpenPokemons);
+        return () => {
+            submenuTodosRef.current && submenuTodosRef.current.removeEventListener('click', onClickTodos)
+            submenuVistosRef.current && submenuVistosRef.current.removeEventListener('click', onClickVistos);
+            submenuCapturadosRef.current && submenuCapturadosRef.current.removeEventListener('click', onClickCapturados);
+            submenuPokemonsRef.current && submenuPokemonsRef.current.removeEventListener('click', onOpenPokemons);
+        };
     }
 
     function onClickTodos() {
-        history.push('/pokemons/todos');
-        console.log('Clicked Todos');
+        history.push('/pokemons');
     }
 
     function onClickVistos() {
-        console.log('Clicked Vistos');
+        history.push('/pokemons/vistos');
     }
 
     function onClickCapturados() {
-        console.log('Clicked Capturados');
+        history.push('/pokemons/capturados');
+    }
+
+    function onOpenPokemons(){
+        if(!history.location.pathname.includes("pokemons"))
+            history.push('/pokemons');
+        //setPokemonsSubmenuStatus(pokemonsSubmenuStatus => !pokemonsSubmenuStatus);
     }
 
     return (
@@ -58,28 +83,28 @@ function StructureMenu() {
                 </hot-dropdown>
             </hot-header>
 
-            <hot-menu-item>
+            <hot-menu-item ref={submenuPokemonsRef} {...(history.location.pathname.includes('/pokemons') && { open: 'true' })}>
                 <div className="hot-application-menu__icon icon-label--menu-style">
                     <FontAwesomeIcon icon={faDragon} />
                 </div>
                 <span>Pokémons</span>
 
-                <hot-menu-item ref={submenuTodosRef} class="submenu" slot="collapsed" {...(location.pathname === "/pokemons/todos" && { active: "true", class: "active-item" })}>
+                <hot-menu-item ref={submenuTodosRef} class="submenu" slot="collapsed" {...(location.pathname === "/pokemons" && { active: "true" })}>
                     <span>Todos</span>
                 </hot-menu-item>
 
-                <hot-menu-item class="submenu" slot="collapsed"  {...(location.pathname === "/pokemons/vistos" && { active: "true", class: "active-item" })}>
+                <hot-menu-item ref={submenuVistosRef} class="submenu" slot="collapsed"  {...(location.pathname === "/pokemons/vistos" && { active: "true" })}>
                     <span>Vistos</span>
                 </hot-menu-item>
 
-                <hot-menu-item class="submenu" slot="collapsed" {...(location.pathname === "/pokemons/capturados" && { active: "true", class: "active-item" })}>
+                <hot-menu-item ref={submenuCapturadosRef} class="submenu" slot="collapsed" {...(location.pathname === "/pokemons/capturados" && { active: "true" })}>
                     <span>Capturados</span>
                 </hot-menu-item>
 
             </hot-menu-item>
 
             <Link to="/treinadores">
-                <hot-menu-item {...(location.pathname === "/treinadores" && { active: "true", class: "active-item" })}>
+                <hot-menu-item {...(location.pathname === "/treinadores" && { active: "true" })}>
                     <div className="hot-application-menu__icon icon-label--menu-style">
                         <FontAwesomeIcon icon={faUsers} />
                     </div>
