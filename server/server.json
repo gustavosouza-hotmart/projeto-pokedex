@@ -1,0 +1,42 @@
+{
+  "trainers": [
+    {
+      "id": 1,
+      "name": "Breno",
+      "age": 36,
+      "seen": [
+        1,
+        15,
+        43
+      ],
+      "captured": [
+        1
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Gustavo",
+      "age": 20,
+      "seen": [
+        4,
+        65,
+        83
+      ],
+      "captured": [
+        4,
+        65
+      ]
+    },
+    {
+      "name": "Cleiton",
+      "age": 32,
+      "seen": [
+        7
+      ],
+      "captured": [
+        7
+      ],
+      "id": 3
+    }
+  ]
+}
