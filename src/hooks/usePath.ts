@@ -5,7 +5,6 @@ export function usePath(path : string) : any {
     const breadcrumbItems : IBreadcrumbItem[] = [];
     
     breadcrumbPath = path.split("/");
-    breadcrumbPath.shift();
     
     for(let i = 0; i < breadcrumbPath.length; i++){
         let word = breadcrumbPath[i];
@@ -15,18 +14,23 @@ export function usePath(path : string) : any {
     breadcrumbPath.map((word : string, i : number) => {
         let active = false;
         let link = "";
-        let lastPosition = breadcrumbPath[breadcrumbPath.length-1];
+        let size = breadcrumbPath.length-1;
+        let lastPosition = breadcrumbPath[size];
         let pathLink = [];
+        let expression = /-/g;
 
         (lastPosition === word) ? active = true : active = false;
 
-        if(word === breadcrumbPath[i]){
+        if(word === breadcrumbPath[i] && i < size){
             pathLink = path.split("/");
-            pathLink.shift();
 
-            link = `/${pathLink.slice(0,i+1)}`;
+            link = `${pathLink.slice(0,i+1)}`;
             link = link.replace(/,/g, "/");
+            console.log(link);
+            
         }
+
+        word = word.replace(expression, " ");
 
         breadcrumbItems.push({
             link: (`${link}`),

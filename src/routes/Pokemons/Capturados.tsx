@@ -1,11 +1,22 @@
 import React from 'react';
+import { useLocation } from 'react-router';
+import Breadcrumb from './../../components/Breadcrumb/breadcrumb';
+import ContentHeader from '../../components/ContentHeader/content-header';
+import Header from '../../components/Header/header';
+import { usePath } from '../../hooks/usePath';
 
 function Capturados(){
+    const path = useLocation();
+    const breadcrumbItems = usePath(path.pathname);
+
     return(
-        <>
-            <h1>Olá mundo! (Capturados)</h1>
-        </>
-        
+        <div className="capturados">
+            <Breadcrumb items={breadcrumbItems}/>
+
+            <ContentHeader>
+                <Header title="Pokémons Capturados" message="Lista com todos os pokémons que você já capturou"/>
+            </ContentHeader>
+        </div>
     );
 }
 

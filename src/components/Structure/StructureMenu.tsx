@@ -23,17 +23,8 @@ function StructureMenu() {
     const submenuPokemonsRef = useRef<any>(null);
     const location = useLocation();
     const history = useHistory();
-    const [pokemonsSubmenuStatus, setPokemonsSubmenuStatus] = useState(false);
 
     useEffect(effectMount, []);
-
-    useEffect(() => {
-        let teste = submenuPokemonsRef.current;
-        
-        console.log(teste);
-        console.log(pokemonsSubmenuStatus);
-        
-    }, [pokemonsSubmenuStatus]);
 
     function effectMount() {
         submenuTodosRef.current && submenuTodosRef.current.addEventListener('click', onClickTodos);
@@ -63,7 +54,6 @@ function StructureMenu() {
     function onOpenPokemons(){
         if(!history.location.pathname.includes("pokemons"))
             history.push('/pokemons');
-        //setPokemonsSubmenuStatus(pokemonsSubmenuStatus => !pokemonsSubmenuStatus);
     }
 
     return (
@@ -104,7 +94,7 @@ function StructureMenu() {
             </hot-menu-item>
 
             <Link to="/treinadores">
-                <hot-menu-item {...(location.pathname === "/treinadores" && { active: "true" })}>
+                <hot-menu-item {...(history.location.pathname === "/treinadores" && { active: "true" })}>
                     <div className="hot-application-menu__icon icon-label--menu-style">
                         <FontAwesomeIcon icon={faUsers} />
                     </div>

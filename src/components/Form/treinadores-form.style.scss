@@ -1,0 +1,33 @@
+.form-treinadores {
+    display: flex;
+    align-content: space-between;
+    flex-direction: column;
+    gap: 24vh;
+    @media only screen and (min-width: 2400px) {
+        gap: 49vh;
+    }
+}
+
+.input-size {
+    .name {
+        flex-direction: row;
+        flex-grow: 2;
+    }
+
+    .date {
+        flex-grow: 1;
+
+        span {
+            color: var(--gray-500);
+            font-size: var(--text-1);
+        }
+    }
+    flex-grow: 1;
+}
+
+.form-buttons {
+    flex-grow: 2;
+    display: flex;
+    justify-content: flex-end;
+    align-self: flex-end;
+}

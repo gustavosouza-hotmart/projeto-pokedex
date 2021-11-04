@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import '@cosmos/breadcrumb/breadcrumb.css';
+
 import { IBreadcrumbItem } from './breadcrumb.interfaces';
-import './breadcrumb.style.scss';
 
 interface IProps {
   items: IBreadcrumbItem[];
