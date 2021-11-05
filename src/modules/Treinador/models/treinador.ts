@@ -1,19 +1,15 @@
 export class Treinador {
-    readonly id?: number;
+    readonly id: number;
     readonly name: string;
-    readonly birthdate: Date;
+    readonly age: number;
+    readonly seen: number[];
+    readonly captured: number[];
 
-    constructor(name: string, birthdate: Date, id?: number) {
-        this.id = id;
+    constructor(name: string, date: Date) {
+        const data = new Date(Date.now());
         this.name = name;
-        this.birthdate = birthdate;
-    }
-
-    verifyDate(): boolean {
-        let now = new Date(Date.now());
-
-        return now.getFullYear() - this.birthdate.getFullYear() > 10
-            ? true
-            : false;
+        this.age = data.getFullYear() - date.getFullYear();
+        this.seen = [];
+        this.captured = [];
     }
 }

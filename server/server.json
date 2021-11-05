@@ -30,12 +30,8 @@
     {
       "name": "Cleiton",
       "age": 32,
-      "seen": [
-        7
-      ],
-      "captured": [
-        7
-      ],
+      "seen": [],
+      "captured": [],
       "id": 3
     }
   ]

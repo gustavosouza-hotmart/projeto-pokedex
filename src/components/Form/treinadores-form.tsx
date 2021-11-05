@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Portuguese } from "flatpickr/dist/l10n/pt";
 import "@cosmos/date-picker";
 import "@cosmos/form/form.css";
 import "@cosmos/form/input-default.css";
@@ -7,6 +8,7 @@ import "@cosmos/button-group/button-group.css";
 import "./treinadores-form.style.scss";
 import { Treinador } from "./../../modules/Treinador/models/treinador";
 import { useHistory } from "react-router";
+import { post } from "./../../api/api";
 
 function TreinadoresForm() {
     const [nome, setNome] = useState("");
@@ -17,31 +19,33 @@ function TreinadoresForm() {
     useEffect(effectMount, []);
 
     function effectMount() {
-        dataNascimentoRef.current.addEventListener(
+        dataNascimentoRef.current?.setLocale(Portuguese);
+        dataNascimentoRef.current?.addEventListener(
             "change",
             handleBirthdateChange
         );
-        return () => {
-            dataNascimentoRef.current.removeEventListener(
+        return () =>
+            dataNascimentoRef.current?.removeEventListener(
                 "change",
                 handleBirthdateChange
             );
-        };
     }
 
     function handleNameChange(e: any) {
         setNome(e.target.value);
     }
 
-    function handleBirthdateChange(e: CustomEvent) {
+    function handleBirthdateChange(e: any) {
         setDataNascimento(e.detail.dateFormatted);
     }
 
     function onSubmit() {
         let data = dataNascimento.split("/").reverse().join("/");
         const dateToTrainer = new Date(data);
-        const treinador1 = new Treinador(nome, dateToTrainer);
-        history.push("/treinadores");
+        const trainer = new Treinador(nome, dateToTrainer);
+        trainer.age >= 10
+            ? post("/trainers", trainer)
+            : alert("Idade inválida.");
     }
 
     return (
@@ -66,14 +70,19 @@ function TreinadoresForm() {
                     <hot-date-picker
                         placeholder="Selecionar data..."
                         ref={dataNascimentoRef}
-                        onChange={handleBirthdateChange}
+                        locale="pt-BR"
                     />
                     <span>Idade mínima 10 anos</span>
                 </div>
             </div>
 
             <div className="form-buttons">
-                <button className="hot-button hot-button--tertiary _mr-4">
+                <button
+                    className="hot-button hot-button--tertiary _mr-4"
+                    onClick={() => {
+                        history.push("/treinadores");
+                    }}
+                >
                     Voltar
                 </button>
 
