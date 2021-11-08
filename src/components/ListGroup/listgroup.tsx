@@ -34,6 +34,16 @@ function ListGroup() {
 
     function handleDelete(trainer: Treinador) {
         deletar(`/trainers/${trainer.id}`);
+        const local = localStorage.getItem("@projeto/active/");
+        let ativo;
+        if (local) ativo = JSON.parse(local);
+
+        console.log(
+            `active[0] = ${ativo.active[0]} trainer.id = ${trainer.id}`
+        );
+
+        if (ativo.active[0] === trainer.id)
+            setObj(JSON.stringify({ active: [] }));
         setDeletou(trainer.id);
     }
 
