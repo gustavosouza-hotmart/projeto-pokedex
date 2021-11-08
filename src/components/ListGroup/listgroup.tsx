@@ -23,7 +23,15 @@ function ListGroup() {
     }, [deletou, obj]);
 
     function handleSelection(trainer: Treinador) {
-        setObj(JSON.stringify({ active: [trainer.id] }));
+        const local = localStorage.getItem("@projeto/active/");
+        let ativo;
+        if (local) ativo = JSON.parse(local);
+
+        if (ativo.active[0] === trainer.id) {
+            setObj(JSON.stringify({ active: [] }));
+        } else {
+            setObj(JSON.stringify({ active: [trainer.id] }));
+        }
     }
 
     function handleEdit(trainer: Treinador) {
@@ -37,10 +45,6 @@ function ListGroup() {
         const local = localStorage.getItem("@projeto/active/");
         let ativo;
         if (local) ativo = JSON.parse(local);
-
-        console.log(
-            `active[0] = ${ativo.active[0]} trainer.id = ${trainer.id}`
-        );
 
         if (ativo.active[0] === trainer.id)
             setObj(JSON.stringify({ active: [] }));
