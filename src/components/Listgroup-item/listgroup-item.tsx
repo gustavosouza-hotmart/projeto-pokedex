@@ -7,6 +7,8 @@ import { faEllipsisV } from "@fortawesome/pro-light-svg-icons";
 
 import "./listgroup-item.style.scss";
 import { Treinador } from "src/modules/Treinador/models/treinador";
+import { Link } from "react-router-dom";
+import NovoTreinador from "src/routes/Treinadores/NovoTreinador";
 
 interface ListGroupItemProps {
     trainer: Treinador;
@@ -21,15 +23,14 @@ function ListGroupItem({
     handleEdit,
     handleDelete,
 }: ListGroupItemProps) {
-    const [active, setActive] = useState(false);
-    let local = localStorage.getItem(`@projeto/active/${trainer.id}`);
-    let ativo = { active: false };
-    if (local) ativo = JSON.parse(local);
+    const active = localStorage.getItem("@projeto/active/");
+    let testActive;
+    if (active) testActive = JSON.parse(active).active[0];
 
     return (
         <hot-list-group-item
             class="item hot-list-group__item--action _d-flex _px-5 _py-4"
-            {...(ativo.active && { active: true })}
+            {...(testActive === trainer.id && { active: true })}
         >
             <div className="infos">
                 <span>{trainer.name}</span>
@@ -48,7 +49,7 @@ function ListGroupItem({
 
                 <hot-dropdown-menu-item
                     slot="menu"
-                    onClick={() => handleSelection(trainer, setActive)}
+                    onClick={() => handleSelection(trainer)}
                 >
                     Selecionar
                 </hot-dropdown-menu-item>
@@ -58,6 +59,7 @@ function ListGroupItem({
                 >
                     Editar
                 </hot-dropdown-menu-item>
+
                 <hot-dropdown-menu-item
                     slot="menu"
                     onClick={() => handleDelete(trainer)}

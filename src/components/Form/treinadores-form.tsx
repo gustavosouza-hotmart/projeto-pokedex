@@ -8,9 +8,14 @@ import "@cosmos/button-group/button-group.css";
 import "./treinadores-form.style.scss";
 import { Treinador } from "./../../modules/Treinador/models/treinador";
 import { useHistory } from "react-router";
-import { post } from "./../../api/api";
+import { atualizar, post } from "./../../api/api";
 
-function TreinadoresForm() {
+interface TreinadoresFormProps {
+    id?: number;
+    name?: string;
+}
+
+function TreinadoresForm({ id, name }: TreinadoresFormProps) {
     const [nome, setNome] = useState("");
     const dataNascimentoRef = useRef<any>(null);
     const [dataNascimento, setDataNascimento] = useState("");
@@ -19,6 +24,9 @@ function TreinadoresForm() {
     useEffect(effectMount, []);
 
     function effectMount() {
+        if (name) {
+            setNome(name);
+        }
         dataNascimentoRef.current?.setLocale(Portuguese);
         dataNascimentoRef.current?.addEventListener(
             "change",
@@ -43,9 +51,20 @@ function TreinadoresForm() {
         let data = dataNascimento.split("/").reverse().join("/");
         const dateToTrainer = new Date(data);
         const trainer = new Treinador(nome, dateToTrainer);
-        trainer.age >= 10
-            ? post("/trainers", trainer)
-            : alert("Idade inválida.");
+
+        if (name) {
+            if (trainer.age >= 10) {
+                atualizar(`/trainers/${id}`, trainer);
+                history.push("/treinadores");
+            } else {
+                alert("Idade inválida.");
+            }
+        } else {
+            trainer.age >= 10
+                ? post("/trainers", trainer)
+                : alert("Idade inválida.");
+            setNome("");
+        }
     }
 
     return (

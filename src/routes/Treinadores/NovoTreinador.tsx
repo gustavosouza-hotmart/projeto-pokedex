@@ -11,22 +11,35 @@ import ContentBody from "./../../components/ContentBody/content-body";
 function NovoTreinador() {
     const path = useLocation();
     const breadcrumbItems = usePath(path.pathname);
+    const id = new URLSearchParams(path.search).get("id");
+    const name = new URLSearchParams(path.search).get("name");
 
     return (
         <div className="novo-treinador">
             <Breadcrumb items={breadcrumbItems} />
 
             <ContentHeader>
-                <Header
-                    title="Novo treinador"
-                    message="Preencha as dados do novo treinador"
-                />
+                {name ? (
+                    <Header
+                        title="Editar treinador"
+                        message="Edite os dados do treinador"
+                    />
+                ) : (
+                    <Header
+                        title="Novo treinador"
+                        message="Preencha as dados do novo treinador"
+                    />
+                )}
             </ContentHeader>
 
             <div className="teste">
                 <ContentBody>
                     <div className="form-treinadores">
-                        <TreinadoresForm />
+                        {name && id ? (
+                            <TreinadoresForm id={parseInt(id)} name={name} />
+                        ) : (
+                            <TreinadoresForm />
+                        )}
                     </div>
                 </ContentBody>
             </div>
