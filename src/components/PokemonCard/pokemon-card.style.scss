@@ -2,8 +2,74 @@
     width: 183px;
     height: 305px;
     display: inline-flex;
+    margin-bottom: var(--spacer-4);
+    border-radius: var(--border-radius-lg);
 }
 
-hot-card-header {
+.pokename {
+    white-space: nowrap;
     font-size: var(--text-2);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pokeimage {
+    border-top: 1px solid var(--gray-200);
+    border-bottom: 1px solid var(--gray-200);
+    img {
+        width: 100%;
+    }
+}
+
+.pokedetails {
+    font-size: var(--text-1);
+}
+
+.icon-details {
+    display: flex;
+    justify-content: space-between;
+
+    .icons {
+        display: flex;
+    }
+
+    .seen-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 20px;
+        margin-right: var(--spacer-1);
+    }
+
+    .captured-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 20px;
+    }
+}
+
+.details {
+    display: flex;
+    justify-content: center;
+}
+
+.icon-disabled {
+    color: var(--gray-300);
+}
+
+.tipos {
+    display: flex;
+    flex-direction: row;
+}
+
+.tipo {
+    display: flex;
+    justify-content: center;
+    font-size: var(--text-1);
+    padding: var(--spacer-0);
+    width: 76.5px;
+    height: 18px;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--border-radius);
 }

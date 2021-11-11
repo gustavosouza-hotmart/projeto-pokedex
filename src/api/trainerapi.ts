@@ -6,6 +6,7 @@ export const api = axios.create({
 
 export const get = async (url: string, setDados: any) => {
     const resp = await api.get(url);
+
     setDados(resp.data);
 };
 

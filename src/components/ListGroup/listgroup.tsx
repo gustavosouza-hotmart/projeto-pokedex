@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 
 import "@cosmos/list-group/list-group.css";
 import ListGroupItem from "../Listgroup-item/listgroup-item";
-import { get } from "./../../api/api";
-import { deletar } from "./../../api/api";
+import { get } from "../../api/trainerapi";
+import { deletar } from "../../api/trainerapi";
 import { Treinador } from "src/modules/Treinador/models/treinador";
 import { useHistory } from "react-router";
 

@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import ContentHeader from "../../components/ContentHeader/content-header";
 import Breadcrumb from "./../../components/Breadcrumb/breadcrumb";
 import Header from "../../components/Header/header";
 import { usePath } from "./../../hooks/usePath";
 import ContentBody from "../../components/ContentBody/content-body";
-import PokemonCard from "../../components/PokemonCard/pokemon-card";
+import PokemonGrid from "./../../components/Grid/pokemonGrid";
 
 function Todos() {
     const path = useLocation();
@@ -23,7 +23,7 @@ function Todos() {
             </ContentHeader>
 
             <ContentBody>
-                <PokemonCard />
+                <PokemonGrid />
             </ContentBody>
         </div>
     );
