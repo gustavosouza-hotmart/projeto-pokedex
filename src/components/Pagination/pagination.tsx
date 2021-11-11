@@ -22,8 +22,6 @@ function Pagination({
         if (local) {
             localstorage = JSON.parse(local);
         }
-
-        console.log("page = " + page + " numberOfPages = " + numberOfPages);
     }, []);
 
     useEffect(() => {
