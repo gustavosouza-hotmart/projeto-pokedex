@@ -18,6 +18,10 @@ function PokemonGrid() {
     const location = useLocation();
 
     useEffect(() => {
+        localStorage.setItem("@projeto/page/", JSON.stringify({ page: 1 }));
+    }, []);
+
+    useEffect(() => {
         getTrainer();
         if (location.pathname === "/pokemons") {
             const local = localStorage.getItem("@projeto/page/");
@@ -60,7 +64,7 @@ function PokemonGrid() {
     }, [trainer, changeInPokemonState, page]);
 
     function onClickPrevious(setPageFromPagination: any) {
-        if (page >= 1) {
+        if (page > 1) {
             localStorage.setItem(
                 "@projeto/page/",
                 JSON.stringify({ page: page - 1 })
@@ -149,7 +153,7 @@ function PokemonGrid() {
                 <Pagination
                     onClickPrevious={onClickPrevious}
                     onClickNext={onClickNext}
-                    pageNumber={page}
+                    numberOfPages={lastPage}
                 />
             </div>
         </div>

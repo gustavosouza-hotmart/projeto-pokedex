@@ -6,11 +6,14 @@ import "@cosmos/dropdown";
 interface PaginationProps {
     onClickPrevious: any;
     onClickNext: any;
-    pageNumber: number;
+    numberOfPages: number;
 }
 
-function Pagination({ onClickPrevious, onClickNext }: PaginationProps) {
-    const [numberOfPages, setNumberOfPages] = useState(0);
+function Pagination({
+    onClickPrevious,
+    onClickNext,
+    numberOfPages,
+}: PaginationProps) {
     const [page, setPage] = useState(1);
 
     useEffect(() => {
@@ -18,8 +21,9 @@ function Pagination({ onClickPrevious, onClickNext }: PaginationProps) {
         let localstorage;
         if (local) {
             localstorage = JSON.parse(local);
-            setNumberOfPages(localstorage.numberOfPages);
         }
+
+        console.log("page = " + page + " numberOfPages = " + numberOfPages);
     }, []);
 
     useEffect(() => {
