@@ -42,9 +42,10 @@ function Pagination({
             </hot-pagination-item>
 
             <hot-pagination-item
-                {...(page === numberOfPages && {
-                    class: "hot-pagination__item--disabled",
-                })}
+                {...(page === numberOfPages ||
+                    (numberOfPages === 0 && {
+                        class: "hot-pagination__item--disabled",
+                    }))}
                 onClick={() => {
                     onClickNext(setPage);
                 }}

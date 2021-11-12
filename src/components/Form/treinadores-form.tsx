@@ -17,11 +17,17 @@ interface TreinadoresFormProps {
 
 function TreinadoresForm({ id, name }: TreinadoresFormProps) {
     const [nome, setNome] = useState("");
-    const dataNascimentoRef = useRef<any>(null);
     const [dataNascimento, setDataNascimento] = useState("");
+    const [nameMessage, setNameMessage] = useState("Nome do treinador");
+    const [dateMessage, setDateMessage] = useState("Idade mínima 10 anos");
+    const [nameError, setNameError] = useState(false);
+    const [dateError, setDateError] = useState(false);
+    const dataNascimentoRef = useRef<any>(null);
     const history = useHistory();
 
     useEffect(effectMount, []);
+
+    useEffect(() => {}, [nameError, dateError]);
 
     function effectMount() {
         if (name) {
@@ -52,18 +58,35 @@ function TreinadoresForm({ id, name }: TreinadoresFormProps) {
         const dateToTrainer = new Date(data);
         const trainer = new Treinador(nome, dateToTrainer);
 
-        if (name) {
-            if (trainer.age >= 10) {
+        if (trainer.name != "" && trainer.age >= 10) {
+            setNameMessage("Nome do treinador");
+            setNameError(false);
+
+            setDateMessage("Idade mínima 10 anos");
+            setDateError(false);
+
+            if (name) {
                 atualizar(`/trainers/${id}`, trainer);
                 history.push("/treinadores");
             } else {
-                alert("Idade inválida.");
+                post("/trainers", trainer);
             }
-        } else {
-            trainer.age >= 10
-                ? post("/trainers", trainer)
-                : alert("Idade inválida.");
+
             setNome("");
+        } else {
+            if (trainer.name === "") {
+                setNameMessage("Nome não pode estar vazio");
+                setNameError(true);
+            } else {
+                setNameError(false);
+            }
+
+            if (trainer && !trainer.age) {
+                setDateMessage("Idade inválida!");
+                setDateError(true);
+            } else {
+                setDateError(false);
+            }
         }
     }
 
@@ -71,19 +94,42 @@ function TreinadoresForm({ id, name }: TreinadoresFormProps) {
         <div className="form-treinadores">
             <div className="hot-form-group hot-form-group--inline input-size">
                 <div className="hot-form hot-form--custom name _mr-6">
-                    <label className="hot-form__label">Nome</label>
+                    <label
+                        className="hot-form__label"
+                        {...(nameError && {
+                            className: "hot-form__label erro _mt-5",
+                        })}
+                    >
+                        Nome
+                    </label>
                     <input
+                        required
                         type="text"
                         className="hot-form__input"
+                        {...(nameError && {
+                            className: "hot-form__input erro",
+                        })}
                         value={nome}
                         id="name"
                         onChange={handleNameChange}
                         placeholder="Nome do treinador"
                     />
+                    {nameError ? (
+                        <span className="erro _ml-2">
+                            Nome não pode estar vazio.
+                        </span>
+                    ) : (
+                        <span></span>
+                    )}
                 </div>
 
                 <div className="hot-form hot-form--custom date _mt-5">
-                    <label className="hot-form__label">
+                    <label
+                        className="hot-form__label"
+                        {...(dateError && {
+                            className: "hot-form__label erro",
+                        })}
+                    >
                         Data de nascimento
                     </label>
                     <hot-date-picker
@@ -91,7 +137,12 @@ function TreinadoresForm({ id, name }: TreinadoresFormProps) {
                         ref={dataNascimentoRef}
                         locale="pt-BR"
                     />
-                    <span>Idade mínima 10 anos</span>
+                    <span
+                        className="_ml-2"
+                        {...(dateError && { className: "erro _ml-2" })}
+                    >
+                        {dateMessage}
+                    </span>
                 </div>
             </div>
 
