@@ -16,10 +16,10 @@ tudo isso com base nos pokémons que o treinador selecionado viu e/ou capturou.
 - React 17.0.2
 - Typescript 4.4.4
 - Axios 0.24.0
-- Json-server
+- Json-server 0.17.0
 - Node Sass 6.0.1
 - Hotmart Cosmos 3.8.0
-- Webpack
+- Webpack 5.59.1
 
 ### Instruções necessárias para compilação e execução do projeto
 
