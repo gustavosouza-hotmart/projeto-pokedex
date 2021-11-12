@@ -11,6 +11,7 @@ function ListGroup() {
     const [trainers, setTrainers] = useState([]);
     const [deletou, setDeletou] = useState(0);
     const [obj, setObj] = useState("");
+    const [confirmOption, setConfirmOption] = useState(false);
     const history = useHistory();
 
     useEffect(() => {
@@ -20,7 +21,7 @@ function ListGroup() {
     useEffect(() => {
         get("/trainers", setTrainers);
         if (obj) localStorage.setItem("@projeto/active/", obj);
-    }, [deletou, obj]);
+    }, [deletou, obj, confirmOption]);
 
     function handleSelection(trainer: Treinador) {
         const local = localStorage.getItem("@projeto/active/");
@@ -41,13 +42,19 @@ function ListGroup() {
     }
 
     function handleDelete(trainer: Treinador) {
-        deletar(`/trainers/${trainer.id}`);
-        const local = localStorage.getItem("@projeto/active/");
-        let ativo;
-        if (local) ativo = JSON.parse(local);
+        let option = confirm(
+            `Tem certeza que deseja apagar o treinador ${trainer.name}?`
+        );
+        setConfirmOption(option);
+        if (option === true) {
+            deletar(`/trainers/${trainer.id}`);
+            const local = localStorage.getItem("@projeto/active/");
+            let ativo;
+            if (local) ativo = JSON.parse(local);
 
-        if (ativo.active[0] === trainer.id)
-            setObj(JSON.stringify({ active: [] }));
+            if (ativo.active[0] === trainer.id)
+                setObj(JSON.stringify({ active: [] }));
+        }
         setDeletou(trainer.id);
     }
 
