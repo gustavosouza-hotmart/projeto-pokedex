@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import "@cosmos/list-group/list-group.css";
 
@@ -7,8 +7,6 @@ import { faEllipsisV } from "@fortawesome/pro-light-svg-icons";
 
 import "./listgroup-item.style.scss";
 import { Treinador } from "src/modules/Treinador/models/treinador";
-import { Link } from "react-router-dom";
-import NovoTreinador from "src/routes/Treinadores/NovoTreinador";
 
 interface ListGroupItemProps {
     trainer: Treinador;
@@ -23,9 +21,9 @@ function ListGroupItem({
     handleEdit,
     handleDelete,
 }: ListGroupItemProps) {
-    const active = localStorage.getItem("@projeto/active/");
+    const local = localStorage.getItem("@projeto/active/");
     let testActive;
-    if (active) testActive = JSON.parse(active).active[0];
+    if (local) testActive = JSON.parse(local).active[0];
 
     return (
         <hot-list-group-item

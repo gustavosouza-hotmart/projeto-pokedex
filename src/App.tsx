@@ -25,10 +25,7 @@ import "@cosmos/styles/utilities/align.css";
 import "@cosmos/styles/utilities/position.css";
 import "@cosmos/styles/utilities/text/text.css";
 import "@cosmos/button/variations/tertiary.css";
-// import '@cosmos/styles/utilities/text/variations/info.css';
 import "@cosmos/styles/utilities/text/variations/primary.css";
-// import '@cosmos/styles/utilities/text/variations/success.css';
-// import '@cosmos/styles/utilities/text/variations/danger.css';
 import "@cosmos/styles/utilities/text/variations/grays.css";
 
 import Structure from "./components/Structure/Structure";
@@ -45,7 +42,7 @@ export const App = () => (
             <Switch>
                 <Route exact path="/treinadores" component={Treinadores} />
 
-                <Route exact path="/pokemons" component={Todos} />
+                <Route exact path="/pokemons/" component={Todos} />
 
                 <Route
                     path="/treinadores/novo-treinador/"

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 
 import "@cosmos/list-group/list-group.css";
 import ListGroupItem from "../Listgroup-item/listgroup-item";
-import { get } from "./../../api/api";
-import { deletar } from "./../../api/api";
+import { get } from "../../api/trainerapi";
+import { deletar } from "../../api/trainerapi";
 import { Treinador } from "src/modules/Treinador/models/treinador";
 import { useHistory } from "react-router";
 
@@ -23,7 +23,15 @@ function ListGroup() {
     }, [deletou, obj]);
 
     function handleSelection(trainer: Treinador) {
-        setObj(JSON.stringify({ active: [trainer.id] }));
+        const local = localStorage.getItem("@projeto/active/");
+        let ativo;
+        if (local) ativo = JSON.parse(local);
+
+        if (ativo.active[0] === trainer.id) {
+            setObj(JSON.stringify({ active: [] }));
+        } else {
+            setObj(JSON.stringify({ active: [trainer.id] }));
+        }
     }
 
     function handleEdit(trainer: Treinador) {
@@ -37,10 +45,6 @@ function ListGroup() {
         const local = localStorage.getItem("@projeto/active/");
         let ativo;
         if (local) ativo = JSON.parse(local);
-
-        console.log(
-            `active[0] = ${ativo.active[0]} trainer.id = ${trainer.id}`
-        );
 
         if (ativo.active[0] === trainer.id)
             setObj(JSON.stringify({ active: [] }));

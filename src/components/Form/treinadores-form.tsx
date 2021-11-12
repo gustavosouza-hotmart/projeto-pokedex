@@ -8,7 +8,7 @@ import "@cosmos/button-group/button-group.css";
 import "./treinadores-form.style.scss";
 import { Treinador } from "./../../modules/Treinador/models/treinador";
 import { useHistory } from "react-router";
-import { atualizar, post } from "./../../api/api";
+import { atualizar, post } from "../../api/trainerapi";
 
 interface TreinadoresFormProps {
     id?: number;
