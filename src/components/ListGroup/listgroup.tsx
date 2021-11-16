@@ -9,9 +9,8 @@ import { useHistory } from "react-router";
 
 function ListGroup() {
     const [trainers, setTrainers] = useState([]);
-    const [deletou, setDeletou] = useState(0);
+    const [countDeleteClicks, setCountDeleteClicks] = useState(0);
     const [obj, setObj] = useState("");
-    const [confirmOption, setConfirmOption] = useState(false);
     const history = useHistory();
 
     useEffect(() => {
@@ -21,7 +20,7 @@ function ListGroup() {
     useEffect(() => {
         get("/trainers", setTrainers);
         if (obj) localStorage.setItem("@projeto/active/", obj);
-    }, [deletou, obj, confirmOption]);
+    }, [countDeleteClicks, obj]);
 
     function handleSelection(trainer: Treinador) {
         const local = localStorage.getItem("@projeto/active/");
@@ -45,8 +44,8 @@ function ListGroup() {
         let option = confirm(
             `Tem certeza que deseja apagar o treinador ${trainer.name}?`
         );
-        setConfirmOption(option);
-        if (option === true) {
+
+        if (option) {
             deletar(`/trainers/${trainer.id}`);
             const local = localStorage.getItem("@projeto/active/");
             let ativo;
@@ -54,8 +53,9 @@ function ListGroup() {
 
             if (ativo.active[0] === trainer.id)
                 setObj(JSON.stringify({ active: [] }));
+
+            setCountDeleteClicks(countDeleteClicks + 1);
         }
-        setDeletou(trainer.id);
     }
 
     return (

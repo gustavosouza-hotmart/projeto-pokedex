@@ -4,16 +4,27 @@
       "birthdate": "1985-11-04T02:00:00.000Z",
       "name": "Breno",
       "age": 36,
-      "seen": [],
-      "captured": [],
+      "seen": [
+        13
+      ],
+      "captured": [
+        13
+      ],
       "id": 1
     },
     {
-      "birthdate": "1988-12-21T02:00:00.000Z",
-      "name": "Cleiton",
-      "age": 33,
-      "seen": [],
-      "captured": [],
+      "birthdate": "1989-11-09T02:00:00.000Z",
+      "name": "Cleiton Oliveira",
+      "age": 32,
+      "seen": [
+        1,
+        4,
+        5
+      ],
+      "captured": [
+        4,
+        5
+      ],
       "id": 2
     },
     {
@@ -23,12 +34,23 @@
       "seen": [
         1,
         2,
-        3
+        3,
+        14,
+        15
       ],
       "captured": [
-        1
+        1,
+        15
       ],
       "id": 3
+    },
+    {
+      "birthdate": "1979-11-08T03:00:00.000Z",
+      "name": "Marcelo",
+      "age": 42,
+      "seen": [],
+      "captured": [],
+      "id": 5
     }
   ]
 }
