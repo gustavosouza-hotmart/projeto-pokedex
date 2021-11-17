@@ -6,11 +6,13 @@ import { get } from "../../api/trainerapi";
 import { deletar } from "../../api/trainerapi";
 import { Treinador } from "src/modules/Treinador/models/treinador";
 import { useHistory } from "react-router";
+import Modal from "./../Modal/modal";
 
 function ListGroup() {
     const [trainers, setTrainers] = useState([]);
-    const [countDeleteClicks, setCountDeleteClicks] = useState(0);
+    const [deletingTrainer, setdeletingTrainer] = useState<any>();
     const [obj, setObj] = useState("");
+    const [showModal, setShowModal] = useState(false);
     const history = useHistory();
 
     useEffect(() => {
@@ -20,7 +22,7 @@ function ListGroup() {
     useEffect(() => {
         get("/trainers", setTrainers);
         if (obj) localStorage.setItem("@projeto/active/", obj);
-    }, [countDeleteClicks, obj]);
+    }, [trainers]);
 
     function handleSelection(trainer: Treinador) {
         const local = localStorage.getItem("@projeto/active/");
@@ -41,35 +43,41 @@ function ListGroup() {
     }
 
     function handleDelete(trainer: Treinador) {
-        let option = confirm(
-            `Tem certeza que deseja apagar o treinador ${trainer.name}?`
-        );
+        setdeletingTrainer(trainer);
+        setShowModal(true);
+    }
 
-        if (option) {
-            deletar(`/trainers/${trainer.id}`);
-            const local = localStorage.getItem("@projeto/active/");
-            let ativo;
-            if (local) ativo = JSON.parse(local);
+    function onSubmitModal(trainer: Treinador) {
+        deletar(`/trainers/${trainer.id}`);
+        const local = localStorage.getItem("@projeto/active/");
+        let ativo;
+        if (local) ativo = JSON.parse(local);
 
-            if (ativo.active[0] === trainer.id)
-                setObj(JSON.stringify({ active: [] }));
-
-            setCountDeleteClicks(countDeleteClicks + 1);
-        }
+        if (ativo.active[0] === trainer.id)
+            setObj(JSON.stringify({ active: [] }));
     }
 
     return (
-        <hot-list-group>
-            {trainers.map((trainer: any) => (
-                <ListGroupItem
-                    key={trainer.id}
-                    trainer={trainer}
-                    handleSelection={handleSelection}
-                    handleDelete={handleDelete}
-                    handleEdit={handleEdit}
-                />
-            ))}
-        </hot-list-group>
+        <>
+            <Modal
+                show={showModal}
+                onSubmitModal={() => {
+                    onSubmitModal(deletingTrainer);
+                }}
+                onClose={() => setShowModal(false)}
+            />
+            <hot-list-group>
+                {trainers.map((trainer: any) => (
+                    <ListGroupItem
+                        key={trainer.id}
+                        trainer={trainer}
+                        handleSelection={handleSelection}
+                        handleDelete={handleDelete}
+                        handleEdit={handleEdit}
+                    />
+                ))}
+            </hot-list-group>
+        </>
     );
 }
 

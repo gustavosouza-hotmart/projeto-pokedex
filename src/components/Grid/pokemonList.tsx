@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import PokemonCard from "../PokemonCard/pokemon-card";
-import "./pokemonsGrid.style.scss";
+import "./pokemonsList.style.scss";
 import { filterPokemons, getAll } from "../../api/pokeapi";
 import Pokemon from "../../modules/Pokemon/models/pokemon";
 import { get } from "../../api/trainerapi";
 import { atualizar } from "../../api/trainerapi";
 import { useLocation } from "react-router";
-import Pagination from "./../../components/Pagination/pagination";
+import Pagination from "../Pagination/pagination";
 
-function PokemonGrid() {
+function PokemonList() {
     const [pokemons, setPokemons] = useState([]);
     const [trainer, setTrainer] = useState<any>();
     const [id, setId] = useState(0);
@@ -93,7 +93,7 @@ function PokemonGrid() {
 
         const currentTrainerId = treinadorSelecionado.active[0];
 
-        if (currentTrainerId != id) {
+        if (currentTrainerId != id && currentTrainerId) {
             get(`/trainers/${currentTrainerId}`, setTrainer);
             setId(currentTrainerId);
         }
@@ -106,26 +106,31 @@ function PokemonGrid() {
     }
 
     function handleSeen(pokemonId: number) {
-        if (!trainer.seen.includes(pokemonId)) trainer.seen.push(pokemonId);
+        if (trainer) {
+            if (!trainer.seen.includes(pokemonId)) trainer.seen.push(pokemonId);
 
-        atualizar(`/trainers/${id}`, trainer);
-        setChangeInPokemonState(!changeInPokemonState);
+            atualizar(`/trainers/${id}`, trainer);
+            setChangeInPokemonState(!changeInPokemonState);
+        }
     }
 
     function handleCaptured(pokemonId: number) {
-        if (!trainer.captured.includes(pokemonId)) {
-            if (!trainer.seen.includes(pokemonId)) trainer.seen.push(pokemonId);
+        if (trainer) {
+            if (!trainer.captured.includes(pokemonId)) {
+                if (!trainer.seen.includes(pokemonId))
+                    trainer.seen.push(pokemonId);
 
-            trainer.captured.push(pokemonId);
+                trainer.captured.push(pokemonId);
+            }
+
+            atualizar(`/trainers/${id}`, trainer);
+            setChangeInPokemonState(!changeInPokemonState);
         }
-
-        atualizar(`/trainers/${id}`, trainer);
-        setChangeInPokemonState(!changeInPokemonState);
     }
 
-    return id ? (
+    return id || location.pathname === "/pokemons" ? (
         <div className="container">
-            <div className="pokemon-grid">
+            <div className="pokemon-list">
                 {pokemons.sort(sortById).map((pokemon: any) => (
                     <PokemonCard
                         key={pokemon.id}
@@ -149,17 +154,21 @@ function PokemonGrid() {
                     />
                 ))}
             </div>
-            <div className="pagination">
-                <Pagination
-                    onClickPrevious={onClickPrevious}
-                    onClickNext={onClickNext}
-                    numberOfPages={lastPage}
-                />
-            </div>
+            {lastPage > 1 ? (
+                <div className="pagination">
+                    <Pagination
+                        onClickPrevious={onClickPrevious}
+                        onClickNext={onClickNext}
+                        numberOfPages={lastPage}
+                    />
+                </div>
+            ) : (
+                <></>
+            )}
         </div>
     ) : (
         <h3>Nenhum treinador selecionado</h3>
     );
 }
 
-export default PokemonGrid;
+export default PokemonList;

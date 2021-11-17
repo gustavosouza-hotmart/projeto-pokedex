@@ -5,7 +5,7 @@ import ContentHeader from "../../components/ContentHeader/content-header";
 import Header from "../../components/Header/header";
 import { usePath } from "../../hooks/usePath";
 import ContentBody from "../../components/ContentBody/content-body";
-import PokemonGrid from "./../../components/Grid/pokemonGrid";
+import PokemonList from "../../components/Grid/pokemonList";
 
 function Capturados() {
     const path = useLocation();
@@ -23,7 +23,7 @@ function Capturados() {
             </ContentHeader>
 
             <ContentBody class="capturados">
-                <PokemonGrid />
+                <PokemonList />
             </ContentBody>
         </div>
     );

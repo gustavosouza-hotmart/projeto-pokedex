@@ -5,7 +5,7 @@ import Breadcrumb from "./../../components/Breadcrumb/breadcrumb";
 import ContentHeader from "../../components/ContentHeader/content-header";
 import Header from "../../components/Header/header";
 import ContentBody from "../../components/ContentBody/content-body";
-import PokemonGrid from "./../../components/Grid/pokemonGrid";
+import PokemonList from "../../components/Grid/pokemonList";
 
 function Vistos() {
     const path = useLocation();
@@ -23,7 +23,7 @@ function Vistos() {
             </ContentHeader>
 
             <ContentBody>
-                <PokemonGrid />
+                <PokemonList />
             </ContentBody>
         </div>
     );

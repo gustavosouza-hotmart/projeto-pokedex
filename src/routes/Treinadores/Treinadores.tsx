@@ -14,6 +14,7 @@ import ContentHeader from "../../components/ContentHeader/content-header";
 import Header from "../../components/Header/header";
 import ContentBody from "./../../components/ContentBody/content-body";
 import "./treinadores.style.scss";
+import Modal from "./../../components/Modal/modal";
 
 export function Treinadores() {
     const history = useHistory();
